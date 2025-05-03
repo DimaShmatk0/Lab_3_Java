@@ -69,7 +69,6 @@ public class MyStorage {
         System.out.printf("Споживач %d: завершує операцію: %n", consumerId);
     }
 
-
     private void addItem(Item item) {
         items[putIndex] = item;
         putIndex = (putIndex + 1) % items.length; //закольцовка масиву
@@ -81,6 +80,5 @@ public class MyStorage {
         takeIndex = (takeIndex + 1) % items.length;//закольцовка масиву
         return item;
     }
-
-
+    
 }
