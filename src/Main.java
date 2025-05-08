@@ -1,15 +1,44 @@
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        MyStorage storage = new MyStorage(3);
+        int storageSize = 3;
+        int producerCount = 2;
+        int consumerCount = 2;
+        int productsCount = 5;
 
-        new Producer(1, 4, storage);
-        new Producer(2, 6, storage);
-        new Producer(3, 3, storage);
+        MyStorage storage = new MyStorage(storageSize);
 
-        new Consumer(1, 6, storage);
-        new Consumer(2, 12, storage);
+        int[] production = SplitProducts(productsCount, producerCount);
+        int[] consumption = SplitProducts(productsCount, consumerCount);
 
-        new Producer(4, 5, storage);
+        for (int i = 0; i < producerCount; i++) {
+            new Producer(i + 1, production[i], storage);
+        }
+
+        for (int i = 0; i < consumerCount; i++) {
+            new Consumer(i + 1, consumption[i], storage);
+        }
+
+    }
+
+    private static int[] SplitProducts(int total, int parts) {
+        if (parts <= 0 || total < parts)
+            throw null;
+
+        Random rand = new Random();
+        int[] result = new int[parts];
+        int remaining = total;
+
+        for (int i = 0; i < parts - 1; i++) {
+            // Гарантуємо, що для останніх частин залишиться хоча б по 1
+            int max = remaining - (parts - i - 1);
+            result[i] = rand.nextInt(1, max + 1);
+            remaining -= result[i];
+        }
+
+        result[parts - 1] = remaining;
+        return result;
     }
 }
+
