@@ -2,10 +2,10 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        int storageSize = 3;
-        int producerCount = 2;
-        int consumerCount = 2;
-        int productsCount = 5;
+        int storageSize = 100;
+        int producerCount = 50;
+        int consumerCount = 150;
+        int productsCount = 200000;
 
         MyStorage storage = new MyStorage(storageSize);
 
