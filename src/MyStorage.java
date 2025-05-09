@@ -1,9 +1,9 @@
 import java.util.concurrent.Semaphore;
 
 public class MyStorage {
-    private final Semaphore emptyStorage = new Semaphore(0);//чи склад пустий
-    private final Semaphore fullStorage;//максимальний обьєм складу
-    private final Semaphore accessStorage = new Semaphore(1);//скільки може зайти виробників та покупців на склад
+    private final Semaphore emptyStorage = new Semaphore(0);
+    private final Semaphore fullStorage;
+    private final Semaphore accessStorage = new Semaphore(1);
     private final Item[] items;
     private int putIndex = 0;
     private int takeIndex = 0;
