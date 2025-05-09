@@ -39,26 +39,21 @@ public class MyStorage {
     public void consume(int consumerId) throws InterruptedException {
         System.out.printf("Споживач %d: підходить до складу\n", consumerId);
 
-        // чекаємо, поки з’явиться хоча б один предмет
         System.out.printf("Споживач %d: чекає на наявність предмета\n", consumerId);
         emptyStorage.acquire();
         System.out.printf("Споживач %d: отримав дозвіл на вхід (є предмет)\n", consumerId);
 
-        // захоплюємо м’ютекс
         System.out.printf("Споживач %d: чекає на м’ютекс для роботи з масивом\n", consumerId);
         accessStorage.acquire();
         System.out.printf("Споживач %d: зайшов у критичну секцію (має м’ютекс)\n", consumerId);
 
-        // забираємо
         System.out.printf("Споживач %d: починає брати предмет\n", consumerId);
         Item item = removeItem();
         System.out.printf("Споживач %d: успішно взяв предмет з id: %d\n", consumerId, item.getId());
 
-        // вихід із критичної секції
         accessStorage.release();
         System.out.printf("Споживач %d: вийшов із складу (відпустив м’ютекс)\n", consumerId);
 
-        // сигналізуємо виробникам, що звільнилося місце
         fullStorage.release();
         System.out.printf("Споживач %d: повідомив, що звільнилось місце у складі\n", consumerId);
         System.out.printf("Споживач %d: завершує операцію\n", consumerId);
