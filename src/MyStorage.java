@@ -66,13 +66,13 @@ public class MyStorage {
 
     private void addItem(Item item) {
         items[putIndex] = item;
-        putIndex = (putIndex + 1) % items.length; //закольцовка масиву
+        putIndex = (putIndex + 1) % items.length;
     }
 
     private Item removeItem() {
         Item item = items[takeIndex];
         items[takeIndex] = null;
-        takeIndex = (takeIndex + 1) % items.length;//закольцовка масиву
+        takeIndex = (takeIndex + 1) % items.length;
         return item;
     }
 
