@@ -3,7 +3,7 @@ import java.util.concurrent.Semaphore;
 public class MyStorage {
     private final Semaphore emptyStorage = new Semaphore(0);//чи склад пустий
     private final Semaphore fullStorage;//максимальний обьєм складу
-    private final Semaphore mutex = new Semaphore(1);//скільки може зайти виробників та покупців на склад
+    private final Semaphore accessStorage = new Semaphore(1);//скільки може зайти виробників та покупців на склад
     private final Item[] items;
     private int putIndex = 0;
     private int takeIndex = 0;
@@ -23,7 +23,7 @@ public class MyStorage {
 
         // захоплюємо м’ютекс
         System.out.printf("Виробник %d: чекає на м’ютекс для роботи з масивом\n", producerId);
-        mutex.acquire();
+        accessStorage.acquire();
         System.out.printf("Виробник %d: зайшов у критичну секцію (має м’ютекс)\n", producerId);
 
         // додаємо
@@ -32,7 +32,7 @@ public class MyStorage {
         System.out.printf("Виробник %d: успішно поклав продукт id: %d\n", producerId, item.getId());
 
         // вихід із критичної секції
-        mutex.release();
+        accessStorage.release();
         System.out.printf("Виробник %d: вийшов із складу (відпустив м’ютекс)\n", producerId);
 
         // сигналізуємо споживачам, що з’явився новий предмет
@@ -51,7 +51,7 @@ public class MyStorage {
 
         // захоплюємо м’ютекс
         System.out.printf("Споживач %d: чекає на м’ютекс для роботи з масивом\n", consumerId);
-        mutex.acquire();
+        accessStorage.acquire();
         System.out.printf("Споживач %d: зайшов у критичну секцію (має м’ютекс)\n", consumerId);
 
         // забираємо
@@ -60,7 +60,7 @@ public class MyStorage {
         System.out.printf("Споживач %d: успішно взяв предмет з id: %d\n", consumerId, item.getId());
 
         // вихід із критичної секції
-        mutex.release();
+        accessStorage.release();
         System.out.printf("Споживач %d: вийшов із складу (відпустив м’ютекс)\n", consumerId);
 
         // сигналізуємо виробникам, що звільнилося місце
