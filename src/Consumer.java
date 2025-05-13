@@ -13,11 +13,7 @@ public class Consumer extends Thread {
 
     public void run() {
         for (int i = 0; i < itemCount; i++) {
-            try {
-                storage.consume(id);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            storage.consume(id);
         }
     }
 }
