@@ -14,12 +14,8 @@ public class Producer extends Thread {
 
     public void run() {
         for (int i = 0; i < itemCount; i++) {
-            try {
-                storage.produce(new Item(id + i), id);
-                System.out.println("Producer " + id + " added item: " + (id + i));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            storage.produce(new Item(id + i), id);
+            System.out.println("Producer " + id + " added item: " + (id + i));
         }
     }
 }
